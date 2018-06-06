@@ -50,6 +50,8 @@ public class BankAccount {
     public void withdraw(WithdrawMoneyCommand command) {
         if (command.getAmountOfMoney() <= balanceInCents + overdraftLimit) {
             apply(new MoneyWithdrawnEvent(id, command.getAmountOfMoney()));
+        } else {
+        	throw new RuntimeException("over withdraw limit");
         }
     }
 

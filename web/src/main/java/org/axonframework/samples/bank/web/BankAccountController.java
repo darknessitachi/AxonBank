@@ -64,7 +64,15 @@ public class BankAccountController {
     @MessageMapping("/withdraw")
     public void withdraw(WithdrawalDto depositDto) {
         WithdrawMoneyCommand command = new WithdrawMoneyCommand(depositDto.getBankAccountId(), depositDto.getAmount());
-        commandGateway.send(command);
+        try {
+			commandGateway.sendAndWait(command);
+		} catch (Exception e) {
+			System.out.println("------Exception-----------------------------");
+			e.printStackTrace();
+		} catch (Throwable e) {
+			System.out.println("------Throwable-----------------------------");
+			e.printStackTrace();
+		}
     }
 
     @MessageMapping("/deposit")
